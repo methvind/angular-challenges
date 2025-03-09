@@ -1,9 +1,11 @@
+export type CurrencyCode = 'EUR' | 'USD' | 'AUD' | 'GBP' | 'CAD';
+
 export interface Product {
   name: string;
   priceA: number;
   priceB: number;
   priceC: number;
-  currencyCode: string;
+  currencyCode: CurrencyCode;
 }
 
 export const products: Product[] = [

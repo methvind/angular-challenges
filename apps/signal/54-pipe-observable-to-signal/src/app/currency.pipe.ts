@@ -1,5 +1,4 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { CurrencyService } from './currency.service';
 
 @Pipe({
@@ -7,9 +6,13 @@ import { CurrencyService } from './currency.service';
   standalone: true,
 })
 export class CurrencyPipe implements PipeTransform {
-  currencyService = inject(CurrencyService);
+  private readonly currencyService = inject(CurrencyService);
+  private readonly symbol = this.currencyService.symbol;
 
-  transform(price: number): Observable<string> {
-    return this.currencyService.symbol$.pipe(map((s) => `${price}${s}`));
+  transform(price: number): string {
+    // TODO: This is not pure because symbol() changes the
+    // output for a given input price. We should change the
+    // pipe to take the code or symbol as a parameter.
+    return `${price}${this.symbol()}`;
   }
 }
