@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { computed, Injectable, signal } from '@angular/core';
+import { CurrencyCode } from './product.model';
 
 export interface Currency {
   name: string;
-  code: string;
+  code: CurrencyCode;
   symbol: string;
 }
 
@@ -17,14 +17,14 @@ export const currency: Currency[] = [
 
 @Injectable()
 export class CurrencyService {
-  private code = new BehaviorSubject('EUR');
+  private code = signal<CurrencyCode>('EUR');
 
-  readonly code$ = this.code.asObservable();
-  readonly symbol$ = this.code$.pipe(
-    map((code) => currency.find((c) => c.code === code)?.symbol ?? code),
-  );
+  readonly symbol = computed(() => {
+    let code = this.code();
+    return currency.find((c) => c.code === code)?.symbol ?? code;
+  });
 
-  public updateCode(code: string) {
-    this.code.next(code);
+  public updateCode(code: CurrencyCode) {
+    this.code.set(code);
   }
 }
