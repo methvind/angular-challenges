@@ -7,13 +7,15 @@ import { UserStore } from './user.service';
   template: `
     <div cd-flash class="m-4 block border border-gray-500 p-4">
       Job:
-      <div>title: {{ userService.user().title }}</div>
-      <div>salary: {{ userService.user().salary }}</div>
+      <div>title: {{ title() }}</div>
+      <div>salary: {{ salary() }}</div>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CDFlashingDirective],
 })
 export class JobComponent {
-  userService = inject(UserStore);
+  private readonly userService = inject(UserStore);
+  protected readonly title = this.userService.userTitle;
+  protected readonly salary = this.userService.salary;
 }

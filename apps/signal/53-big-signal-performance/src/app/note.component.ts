@@ -6,12 +6,13 @@ import { UserStore } from './user.service';
   selector: 'note',
   template: `
     <div cd-flash class="m-4 block border border-gray-500 p-4">
-      Note: {{ userService.user().note }}
+      Note: {{ note() }}
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CDFlashingDirective],
 })
 export class NoteComponent {
-  userService = inject(UserStore);
+  private readonly userService = inject(UserStore);
+  protected readonly note = this.userService.userNote;
 }
