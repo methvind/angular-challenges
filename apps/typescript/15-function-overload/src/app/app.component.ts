@@ -9,7 +9,7 @@ import { createVehicle } from './vehicle.utils';
 export class AppComponent {
   car = createVehicle('car', 'diesel');
   moto = createVehicle('moto', 'diesel');
-  bus = createVehicle('bus', undefined, 20);
-  boat = createVehicle('boat', undefined, 300, true);
+  bus = createVehicle('bus', 20, true); // Could also have been boat = createVehicle('boat', 20);
+  boat = createVehicle('boat', 300); // Could also have been bus = createVehicle('bus', 300, true);
   bicycle = createVehicle('bicycle');
 }
